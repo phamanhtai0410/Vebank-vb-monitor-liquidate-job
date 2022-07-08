@@ -1,5 +1,5 @@
 
-# **Vebank MONITOR LIQUIDATION JOBS**
+# **Vebank MONITOR LIQUIDATION**
 
 ## Environment
 - docker
@@ -17,28 +17,28 @@ JUST RUN: `> docker-compose up -d --build`
 
 ## Container env config:
 ```/webapps/.env```
-<!-- 
-## Run get logs
-
-```python scripts/get_logs.py contract=<Name in DefaultConfig> event=<event name in smc> abi_path=<path> handle=<function handle in tasks - celery worker> from_block=<block number>```
-
-## Run listen event
-
-```python scripts/listener.py contract=<Name in DefaultConfig> event=<event name in smc> abi_path=<path> handle=<function handle in tasks - celery worker>``` 
-
 
 ## Release v1.0 
 
-```
-# listen event emit logs in time
-python3 scripts/listener.py contract=CONTRACT_LENDING_POOL handle=marketplace_event_sale abi_path=abi/pool.json  event=Supply 
 
-# Run worker 
-celery --app tasks.task worker -Q vebank-smc-jobs -l DEBUG -c 4
-```
 
-## Running Command
+## 1. Run worker lending on staging
 ```
-python3 scripts/listener.py contract=CONTRACT_LENDING_POOL handle=lending_event_supply abi_path=lib/abi/Pool.json  event=Supply
+python3 tasks/consumer_lending.py -e lending-actions -k lending.supply -q queue-lending-supply
+python3 tasks/consumer_lending.py -e lending-actions -k lending.borrow -q queue-lending-borrow
+python3 tasks/consumer_lending.py -e lending-actions -k lending.repay -q queue-lending-repay
+python3 tasks/consumer_lending.py -e lending-actions -k lending.withdraw -q queue-lending-withdraw
+python3 tasks/consumer_lending.py -e lending-actions -k lending.reserve_update -q queue-lending-reserve_update
 ```
-  -->
+## 2. Run worker lending on local
+```
+python3 tasks/consumer_lending.py -e lending-actions -k lending.supply -q queue-local-lending-supply
+python3 tasks/consumer_lending.py -e lending-actions -k lending.borrow -q queue-local-lending-borrow
+python3 tasks/consumer_lending.py -e lending-actions -k lending.repay -q queue-local-lending-repay
+python3 tasks/consumer_lending.py -e lending-actions -k lending.withdraw -q queue-local-lending-withdraw
+python3 tasks/consumer_lending.py -e lending-actions -k lending.reserve_update -q queue-local-lending-reserve_update
+```
+## 3. Run worker pool on staging
+```
+python3 tasks/consumer_pool.py -e pool-actions -k pool.pair_created -q queue-pool-pair_created
+```

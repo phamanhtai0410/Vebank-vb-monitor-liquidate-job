@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  vb-monitor-liquidation:
+    image: vb-monitor-liquidation
+    build: .
+    restart: always
+    volumes:
+      - ./:/webapps
+    ports:
+      - 9999:5005
+    command: supervisord -n -c /etc/supervisor.d/service.conf
+
+  vb-monitor-liquidation-worker:
+    image: vb-monitor-liquidation-worker
+    build: .
+    restart: always
+    volumes:
+      - ./:/webapps
+    command: supervisord -n -c /etc/supervisor.d/worker.conf
+
+  vb-monitor-liquidation-scheduled-jobs:
+    image: vb-monitor-liquidation-scheduled-jobs
+    build: .
+    restart: always
+    volumes:
+      - ./:/webapps
+    command: supervisord -n -c /etc/supervisor.d/scheduled_job.conf
