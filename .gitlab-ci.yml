@@ -8,6 +8,8 @@ variables:
   CONTAINER_REPO_ASIA_STAG: 420811272222.dkr.ecr.ap-southeast-1.amazonaws.com/vb-staging-ecr/monitor-liquidation-job
   CONTAINER_REPO_ASIA_PROD: 420811272222.dkr.ecr.ap-southeast-1.amazonaws.com/vb-production-ecr/monitor-liquidation-job
   NAMESPACE_STAG: vb-jobs-stag
+  NAMESPACE_STAG_API: vb-api-stag
+
   NAMESPACE_PROD: vb-jobs
   FULLREPO_ASIA_STAG: $CONTAINER_REPO_ASIA_STAG:$CI_COMMIT_SHORT_SHA
   FULLREPO_ASIA_PROD: $CONTAINER_REPO_ASIA_PROD:$CI_COMMIT_SHORT_SHA
@@ -134,7 +136,7 @@ deploy_api_stag:
     - *kubectl_config
     - |
       if [ "$CI_COMMIT_REF_NAME" == "stag" ]; then
-        sed -i -e "s#\[NAMESPACE\]#$NAMESPACE_STAG#g" skaffold.yaml
+        sed -i -e "s#\[NAMESPACE\]#$NAMESPACE_STAG_API#g" skaffold.yaml
         sed -i -e "s#\[APP_NAME\]#$APP_NAME_API#g" skaffold.yaml
         sed -i -e "s#\[CONTAINER_REPO\]#$CONTAINER_REPO_ASIA_STAG#g" skaffold.yaml
         sed -i -e "s#\[CI_COMMIT_REF_NAME\]#$CI_COMMIT_REF_NAME#g" skaffold.yaml
