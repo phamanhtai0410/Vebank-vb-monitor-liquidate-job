@@ -43,7 +43,7 @@ class DefaultConfig(BaseConfig):
     CELERY_IMPORTS = ['src.workers']
 
     # Scheduled Jobs Config
-    SCHEDULED_INTERVAL = os.getenv('SCHEDULED_INTERVAL') or 2
+    SCHEDULED_INTERVAL = os.getenv('SCHEDULED_INTERVAL') or 300
 
     # Vechain Call to Pool
     CONTRACT_LENDING_POOL = os.getenv('CONTRACT_LENDING_POOL')
