@@ -14,8 +14,7 @@ def main(_cfg):
     cfg_rabbit = {
         "hostname": DefaultConfig.RABBIT_HOST, "port": DefaultConfig.RABBIT_PORT,
         "username": DefaultConfig.RABBIT_USER, "password": DefaultConfig.RABBIT_PASSWORD,
-        "vhost": DefaultConfig.RABBIT_VHOST, "exchange_type": "topic",
-        "heartbeat": 0
+        "vhost": DefaultConfig.RABBIT_VHOST, "exchange_type": "topic"
     }
 
     cfg_rabbit.update(_cfg)
