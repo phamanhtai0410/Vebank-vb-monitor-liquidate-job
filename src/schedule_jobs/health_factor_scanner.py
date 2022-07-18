@@ -17,6 +17,7 @@ def main(_cfg):
         "vhost": DefaultConfig.RABBIT_VHOST, "exchange_type": "topic",
         "heartbeat": 0
     }
+
     cfg_rabbit.update(_cfg)
     # event_name = cfg_rabbit["queue"].split("-")[-1]
     print("cfg_rabbit: ", cfg_rabbit)
